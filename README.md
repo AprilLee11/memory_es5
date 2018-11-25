@@ -1,8 +1,4 @@
-=======
-
 # Memory Game
-
----
 
 ## Description
 
@@ -10,18 +6,14 @@ You turn over one tile and then try to finding a matching tile. Currently, it is
 
 ## Example
 
-[Screenshot of game](https://github.com/AprilLee11/memorygame/blob/gh-pages/memorygame.png)
+[Screenshot of game](https://github.com/AprilLee11/memory_es5/blob/master/memorygame.png)
 
 ## Technology Used
 
 - HTML
 - CSS
-- JavaScript
+- JavaScript (ES5)
 
 ## Technical report
 
 [click](https://medium.com/@mikyung.lee11/memory-game-with-javascript-5e07f296dc49)
-
-> > > > > > > # gh-pages
-> > > > > > >
-> > > > > > > 36ee573037ff6827b37fba270d980b348ffa05fa
