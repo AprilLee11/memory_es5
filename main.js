@@ -1,3 +1,11 @@
+var Utilities = (function() {
+  return {
+    wrapAsClass: function(elementName) {
+      return "." + elementName;
+    }
+  };
+})();
+
 var gameController = (function() {
   var cards;
   var totalPairsNum;
@@ -113,21 +121,21 @@ var UIController = (function() {
     },
 
     flipCard: function(card) {
-      var imgNum = document.querySelector("." + card).dataset.value;
-      document.querySelector("." + card).firstChild.src = `img/${imgNum}.png`;
+      var imgNum = document.querySelector(card).dataset.value;
+      document.querySelector(card).firstChild.src = `img/${imgNum}.png`;
     },
 
     updateMatched: function(firstCard, secondCard) {
-      document.querySelector("." + firstCard).firstChild.src = "";
-      document.querySelector("." + firstCard).style.backgroundColor = "white";
+      document.querySelector(firstCard).firstChild.src = "";
+      document.querySelector(firstCard).style.backgroundColor = "white";
 
-      document.querySelector("." + secondCard).firstChild.src = "";
-      document.querySelector("." + secondCard).style.backgroundColor = "white";
+      document.querySelector(secondCard).firstChild.src = "";
+      document.querySelector(secondCard).style.backgroundColor = "white";
     },
 
     updateNotMatched: function(firstCard, secondCard) {
-      document.querySelector("." + firstCard).firstChild.src = "img/back.png";
-      document.querySelector("." + secondCard).firstChild.src = "img/back.png";
+      document.querySelector(firstCard).firstChild.src = "img/back.png";
+      document.querySelector(secondCard).firstChild.src = "img/back.png";
     },
 
     updateTime: function() {
@@ -157,7 +165,7 @@ var UIController = (function() {
   };
 })();
 
-var controller = (function(gameCtrl, UICtrl) {
+var controller = (function(gameCtrl, UICtrl, Utils) {
   var currentDimension;
   var timer;
   var firstCard = null;
@@ -229,30 +237,38 @@ var controller = (function(gameCtrl, UICtrl) {
     if (evt.target.tagName === "IMG") {
       if (this.firstCard == null) {
         this.firstCard = evt.target.parentNode.classList[1];
-        UIController.flipCard(evt.target.parentNode.classList[1]);
+        UIController.flipCard(
+          Utils.wrapAsClass(evt.target.parentNode.classList[1])
+        );
       } else {
         this.secondCard = evt.target.parentNode.classList[1];
         if (!(this.firstCard === this.secondCard)) {
           if (gameController.findMatch(this.firstCard, this.secondCard)) {
             if (gameController.decideGameOver()) {
-              UIController.flipCard(this.secondCard);
-              UIController.updateMatched(this.firstCard, this.secondCard);
+              UIController.flipCard(Utils.wrapAsClass(this.secondCard));
+              UIController.updateMatched(
+                Utils.wrapAsClass(this.firstCard),
+                Utils.wrapAsClass(this.secondCard)
+              );
               setTimeout(sendMessage, 1000, "You Completed");
               clearInterval(this.timer);
               setTimeout(UIController.removeTimer, 3000);
               setTimeout(UIController.disableReset, 1000);
             } else {
-              UIController.flipCard(this.secondCard);
-              UIController.updateMatched(this.firstCard, this.secondCard);
+              UIController.flipCard(Utils.wrapAsClass(this.secondCard));
+              UIController.updateMatched(
+                Utils.wrapAsClass(this.firstCard),
+                Utils.wrapAsClass(this.secondCard)
+              );
             }
             this.firstCard = null;
           } else {
-            UIController.flipCard(this.secondCard);
+            UIController.flipCard(Utils.wrapAsClass(this.secondCard));
             setTimeout(
               UIController.updateNotMatched,
               1000,
-              this.firstCard,
-              this.secondCard
+              Utils.wrapAsClass(this.firstCard),
+              Utils.wrapAsClass(this.secondCard)
             );
             this.firstCard = null;
           }
@@ -266,6 +282,6 @@ var controller = (function(gameCtrl, UICtrl) {
       initMemoryGame();
     }
   };
-})(gameController, UIController);
+})(gameController, UIController, Utilities);
 
 controller.init();
