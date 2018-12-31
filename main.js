@@ -182,7 +182,7 @@ var controller = (function(gameCtrl, UICtrl, Utils) {
         if (num === 2 || num === 4 || num === 6) {
           startGame(num);
         } else {
-          sendMessage(`Please enter a value among 2, 4, and 6.`);
+          sendMessage("Please enter a value among 2, 4, and 6.");
         }
       });
 
